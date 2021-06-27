@@ -1,0 +1,12 @@
+D:\Coding\DeepTry.API\DeepTry.DL\bin\Debug\netcoreapp3.1\DeepTry.DL.deps.json
+D:\Coding\DeepTry.API\DeepTry.DL\bin\Debug\netcoreapp3.1\DeepTry.DL.dll
+D:\Coding\DeepTry.API\DeepTry.DL\bin\Debug\netcoreapp3.1\DeepTry.DL.pdb
+D:\Coding\DeepTry.API\DeepTry.DL\bin\Debug\netcoreapp3.1\DeepTry.Common.dll
+D:\Coding\DeepTry.API\DeepTry.DL\bin\Debug\netcoreapp3.1\DeepTry.Common.pdb
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.csproj.AssemblyReference.cache
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.AssemblyInfoInputs.cache
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.AssemblyInfo.cs
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.csproj.CoreCompileInputs.cache
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.csproj.CopyComplete
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.dll
+D:\Coding\DeepTry.API\DeepTry.DL\obj\Debug\netcoreapp3.1\DeepTry.DL.pdb
