@@ -9,6 +9,14 @@ namespace DeepTry.DL
     public class DBContext<T>
     {
         readonly string _connectionString = "Server=DESKTOP-5K2RFED\\SQLEXPRESS;Database=QLCNH;Trusted_Connection=True;";
+        /// <summary>
+        /// ConnectionString:
+        /// bttu: "Server=DESKTOP-5K2RFED\\SQLEXPRESS;Database=QLCNH;Trusted_Connection=True;"
+        /// ndviet:
+        /// nh:
+        /// lvthang:
+        /// tqhung:
+        /// </summary>
         SqlConnection _sqlConnection;
         SqlCommand _sqlCommand;
 
@@ -35,7 +43,7 @@ namespace DeepTry.DL
             {
                 var objs = new List<T>();
                 var className = typeof(T).Name; // Lấy ra kiểu dữ liệu
-                _sqlCommand.CommandText = $"Func_Get{className}sByPage";
+                _sqlCommand.CommandText = $"Proc_Get{className}sByPage";
                 _sqlCommand.Parameters.AddWithValue("PageLimit", record);
                 _sqlCommand.Parameters.AddWithValue("Count", page);
 
@@ -76,7 +84,7 @@ namespace DeepTry.DL
             {
                 var objs = new List<T>();
                 var className = typeof(T).Name;
-                _sqlCommand.CommandText = $"Func_Get{className}s";
+                _sqlCommand.CommandText = $"Proc_Get{className}s";
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -95,7 +103,7 @@ namespace DeepTry.DL
                 mySqlDataReader.Close();
                 return objs;
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }
@@ -113,7 +121,7 @@ namespace DeepTry.DL
             try
             {
                 var className = typeof(T).Name;
-                _sqlCommand.CommandText = $"Func_Get{className}ByID";
+                _sqlCommand.CommandText = $"Proc_Get{className}ByID";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand);
                 if (_sqlCommand.Parameters.Count > 0)
                 {
@@ -153,7 +161,7 @@ namespace DeepTry.DL
             try
             {
                 var objType = typeof(T).Name;
-                _sqlCommand.CommandText = $"Func_Insert{objType}";
+                _sqlCommand.CommandText = $"Proc_Insert{objType}";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand); //Lấy ra các tham số cần truyền của proc
                 var parameters = _sqlCommand.Parameters;
                 foreach (SqlParameter param in parameters)
@@ -186,7 +194,7 @@ namespace DeepTry.DL
             try
             {
                 var objType = typeof(T).Name;
-                _sqlCommand.CommandText = $"Func_Update{objType}";
+                _sqlCommand.CommandText = $"Proc_Update{objType}";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
                 var parameters = _sqlCommand.Parameters;
                 foreach (SqlParameter param in parameters)
@@ -219,7 +227,7 @@ namespace DeepTry.DL
             try
             {
                 var objType = typeof(T).Name;
-                _sqlCommand.CommandText = $"Func_Delete{objType}";
+                _sqlCommand.CommandText = $"Proc_Delete{objType}";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
                 if (_sqlCommand.Parameters.Count > 0)
                 {

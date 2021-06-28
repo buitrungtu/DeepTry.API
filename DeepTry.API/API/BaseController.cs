@@ -12,15 +12,20 @@ namespace DeepTry.API.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseAPI<T> : ControllerBase
+    public class BaseController<T> : ControllerBase
     {
         BaseService<T> _baseService;
 
-        public BaseAPI(BaseService<T> baseService)
+        public BaseController(BaseService<T> baseService)
         {
             _baseService = baseService;
         }
 
+        [HttpGet("get_by_test")]
+        public string Test()
+        {
+            return "test";
+        }
 
         // GET: api/<BaseAPI>
         [HttpGet("get_by_page")]
