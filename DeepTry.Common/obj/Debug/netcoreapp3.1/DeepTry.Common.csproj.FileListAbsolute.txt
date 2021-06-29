@@ -7,3 +7,12 @@ D:\Coding\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.Asse
 D:\Coding\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.csproj.CoreCompileInputs.cache
 D:\Coding\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.dll
 D:\Coding\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.pdb
+F:\DeepTry.API\DeepTry.Common\bin\Debug\netcoreapp3.1\DeepTry.Common.deps.json
+F:\DeepTry.API\DeepTry.Common\bin\Debug\netcoreapp3.1\DeepTry.Common.dll
+F:\DeepTry.API\DeepTry.Common\bin\Debug\netcoreapp3.1\DeepTry.Common.pdb
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.csprojAssemblyReference.cache
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.AssemblyInfoInputs.cache
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.AssemblyInfo.cs
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.csproj.CoreCompileInputs.cache
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.dll
+F:\DeepTry.API\DeepTry.Common\obj\Debug\netcoreapp3.1\DeepTry.Common.pdb

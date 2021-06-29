@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Coding\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj": {}
+    "F:\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj": {}
   },
   "projects": {
-    "D:\\Coding\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj": {
+    "F:\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj",
+        "projectUniqueName": "F:\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj",
         "projectName": "DeepTry.API",
-        "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\DeepTry.API\\DeepTry.API\\obj\\",
+        "projectPath": "F:\\DeepTry.API\\DeepTry.API\\DeepTry.API.csproj",
+        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+        "outputPath": "F:\\DeepTry.API\\DeepTry.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj": {
-                "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj"
+              "F:\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj": {
+                "projectPath": "F:\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj"
               },
-              "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
-                "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
+              "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
+                "projectPath": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
               }
             }
           }
@@ -70,21 +70,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj": {
+    "F:\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj",
+        "projectUniqueName": "F:\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj",
         "projectName": "DeepTry.BL",
-        "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\DeepTry.API\\DeepTry.BL\\obj\\",
+        "projectPath": "F:\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj",
+        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+        "outputPath": "F:\\DeepTry.API\\DeepTry.BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -98,11 +98,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
-                "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
+              "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
+                "projectPath": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
               },
-              "D:\\Coding\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj": {
-                "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj"
+              "F:\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj": {
+                "projectPath": "F:\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj"
               }
             }
           }
@@ -131,21 +131,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
+    "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
+        "projectUniqueName": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
         "projectName": "DeepTry.Common",
-        "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\obj\\",
+        "projectPath": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
+        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+        "outputPath": "F:\\DeepTry.API\\DeepTry.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -185,21 +185,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Coding\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj": {
+    "F:\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coding\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj",
+        "projectUniqueName": "F:\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj",
         "projectName": "DeepTry.DL",
-        "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Coding\\DeepTry.API\\DeepTry.DL\\obj\\",
+        "projectPath": "F:\\DeepTry.API\\DeepTry.DL\\DeepTry.DL.csproj",
+        "packagesPath": "C:\\Users\\nguye\\.nuget\\packages\\",
+        "outputPath": "F:\\DeepTry.API\\DeepTry.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nguye\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -213,8 +213,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
-                "projectPath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
+              "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj": {
+                "projectPath": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj"
               }
             }
           }
@@ -249,7 +249,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
