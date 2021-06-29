@@ -53,7 +53,10 @@ namespace DeepTry.BL.Service
             }
             return serviceResponse;
         }
-
+        public int ExecProc(string proc, object parameters)
+        {
+            return _baseRepository.ExecProc(proc, parameters);
+        }
         public ServiceResponse Update(T obj)
         {
             var serviceResponse = new ServiceResponse();

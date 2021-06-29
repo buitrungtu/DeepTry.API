@@ -15,9 +15,11 @@ namespace DeepTry.API
         {
             //config cho service
             services.AddScoped<EmployeeService>();
+            services.AddScoped<AccountService>();
             services.AddScoped(typeof(BaseService<>));
             //config cho Repository
             services.AddScoped<EmployeeRepository>();
+            services.AddScoped<AccountRepository>();
             services.AddScoped(typeof(BaseRepository<>));
             //config cho Database
             services.AddScoped(typeof(DBContext<>));

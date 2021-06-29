@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YlvFgWsy6V5gx7kYwWEgpoAXc+vpWuLgnwbidxhrwOfJIJOvpbSKsGXkJCCKu0LdlsZ35imPIfJfVY6LGuG/bw==",
+  "dgSpecHash": "MFrcM9vLrrwSvzfCi8uhANfUFyuUgjyg6BJ5oZTbWvqRVhdNvq+R8fotfh8OdQcjYd1D4PVEsw3EPysbQm9MLg==",
   "success": true,
-  "projectFilePath": "F:\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
+  "projectFilePath": "D:\\Coding\\DeepTry.API\\DeepTry.Common\\DeepTry.Common.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

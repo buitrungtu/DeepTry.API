@@ -182,6 +182,44 @@ namespace DeepTry.DL
             }
 
         }
+        /// <summary>
+        /// Thực hiện exec 1 proc trong db
+        /// </summary>
+        /// <param name="procName">Tên proc</param>
+        /// <param name="p_parameters">object các tham số truyền vào</param>
+        /// <returns></returns>
+        /// @bttu
+        public int ExecProc(string procName, object p_parameters)
+        {
+            try
+            {
+                _sqlCommand.CommandText = $"{procName}";
+                SqlCommandBuilder.DeriveParameters(_sqlCommand); //Lấy ra các tham số cần truyền của proc
+                var parameters = _sqlCommand.Parameters;
+                foreach (SqlParameter param in parameters)
+                {
+                    var paramName = param.ParameterName.Replace("@", "");
+                    if(paramName != "RETURN_VALUE")
+                    {
+                        if(param.DbType is System.Data.DbType.Guid)
+                        {
+                            param.Value = new Guid(p_parameters.GetType().GetProperty($"{paramName}").GetValue(p_parameters, null).ToString());
+                        }
+                        else
+                        {
+                            param.Value = p_parameters.GetType().GetProperty($"{paramName}").GetValue(p_parameters, null);
+                        }
+                    }
+                }
+                var affectRows = _sqlCommand.ExecuteNonQuery();
+                return affectRows;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
 
         /// <summary>
         /// Sửa 1 bản ghi
