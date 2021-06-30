@@ -1,3 +1,4 @@
+-- bttu - Tạo proc thêm tài khoản, công ty, chi nhánh (29.6.2021)
 CREATE PROCEDURE dbo.Proc_InsertAccount(
 	@account_name varchar(50), @password varchar(50), @is_admin int, 
 	@company_id uniqueidentifier, @branch_id uniqueidentifier)

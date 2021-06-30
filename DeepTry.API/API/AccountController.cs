@@ -32,7 +32,7 @@ namespace DeepTry.API.API
                 is_admin = acc.is_admin,
                 company_id = acc.company_id,
                 branch_id = acc.branch_id
-            });
+            }, 0);
             if (affectRows > 0)
                 return CreatedAtAction("POST", affectRows);
             else

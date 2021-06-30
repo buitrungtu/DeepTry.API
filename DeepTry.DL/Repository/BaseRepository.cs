@@ -38,9 +38,9 @@ namespace DeepTry.DL.Repository
         {
             return _databaseContext.Delete(objID);
         }
-        public int ExecProc(string proc, object parameters)
+        public object ExecProc(string proc, object parameters, int action)
         {
-            return _databaseContext.ExecProc(proc, parameters);
+            return _databaseContext.ExecProc(proc, parameters, action);
         }
     }
 }
