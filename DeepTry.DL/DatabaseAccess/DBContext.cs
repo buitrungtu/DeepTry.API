@@ -186,10 +186,11 @@ namespace DeepTry.DL
         /// Thực hiện exec 1 proc trong db
         /// </summary>
         /// <param name="procName">Tên proc</param>
-        /// <param name="p_parameters">object các tham số truyền vào</param>
+        /// <param name="p_parameters">object các tham số truyền vào</param
+        /// <param name="action"> 0 - Insert or Update, 1 -  Get </param>
         /// <returns></returns>
         /// @bttu
-        public int ExecProc(string procName, object p_parameters)
+        public object ExecProc(string procName, object p_parameters, int action = 0)
         {
             try
             {
@@ -211,8 +212,32 @@ namespace DeepTry.DL
                         }
                     }
                 }
-                var affectRows = _sqlCommand.ExecuteNonQuery();
-                return affectRows;
+                if(action == 0)
+                {
+                    var affectRows = _sqlCommand.ExecuteNonQuery();
+                    return affectRows;
+                }
+                else
+                {
+                    var objs = new List<Object>();
+                    SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
+                    while (mySqlDataReader.Read())
+                    {
+                        var obj = Activator.CreateInstance<T>();
+
+                        for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                        {
+                            var columnName = mySqlDataReader.GetName(i);// lấy ra tên trường
+                            var value = mySqlDataReader.GetValue(i);// lấy giá trị trường
+                            var propertyInfo = obj.GetType().GetProperty(columnName);//Lấy ra property có tên là columnName
+                            if (propertyInfo != null && value != DBNull.Value)
+                                propertyInfo.SetValue(obj, value);
+                        }
+                        objs.Add(obj);
+                    }
+                    mySqlDataReader.Close();
+                    return objs;
+                }
             }
             catch (Exception e)
             {

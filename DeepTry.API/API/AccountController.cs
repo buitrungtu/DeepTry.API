@@ -25,7 +25,7 @@ namespace DeepTry.API.API
         public IActionResult InsertAccount([FromBody] Account acc)
         {
             ServiceResponse serviceResponse = new ServiceResponse();
-            int affectRows = _accountService.ExecProc("Proc_InsertAccount", new
+            int affectRows = (int)_accountService.ExecProc("Proc_InsertAccount", new
             {
                 account_name = acc.account_name,
                 password = acc.password,
