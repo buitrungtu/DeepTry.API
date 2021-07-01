@@ -24,7 +24,7 @@ namespace DeepTry.Common.Model
 
         public int? customer_type { get; set; }
 
-        public int? debt_amount { get; set; }
+        public long? debt_amount { get; set; }
 
         public int? quanlity_buy { get; set; }
 

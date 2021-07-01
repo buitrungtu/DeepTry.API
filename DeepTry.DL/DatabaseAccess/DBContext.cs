@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Reflection;
 using System.Text;
 
@@ -84,7 +86,7 @@ namespace DeepTry.DL
             {
                 var objs = new List<T>();
                 var className = typeof(T).Name;
-                _sqlCommand.CommandText = $"Proc_Get{className}s";
+                _sqlCommand.CommandText = $"Proc_Get{className}";
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
@@ -219,19 +221,26 @@ namespace DeepTry.DL
                 }
                 else
                 {
-                    var objs = new List<Object>();
+                    var objs = new List<Dictionary<string,string>>();
                     SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                     while (mySqlDataReader.Read())
                     {
-                        var obj = Activator.CreateInstance<T>();
+                        Dictionary<string, string> obj = new Dictionary<string, string>();
 
                         for (int i = 0; i < mySqlDataReader.FieldCount; i++)
                         {
+                            
                             var columnName = mySqlDataReader.GetName(i);// lấy ra tên trường
                             var value = mySqlDataReader.GetValue(i);// lấy giá trị trường
-                            var propertyInfo = obj.GetType().GetProperty(columnName);//Lấy ra property có tên là columnName
-                            if (propertyInfo != null && value != DBNull.Value)
-                                propertyInfo.SetValue(obj, value);
+                            if (obj.ContainsKey(columnName))
+                            {
+                                obj[columnName] = value + "";
+                            }
+                            else
+                            {
+                                obj.Add(columnName, value + "");
+
+                            }
                         }
                         objs.Add(obj);
                     }

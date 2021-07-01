@@ -53,11 +53,20 @@ namespace DeepTry.API.API
         }
 
         [HttpGet("get_full_data")]
-        public IActionResult GetFullData()
+        public ServiceResponse GetFullData()
         {
+            ServiceResponse serviceResponse = new ServiceResponse();
             var data = _baseService.GetFullData();
-            if (data != null) return Ok(data);
-            else return NoContent();
+            if (data != null) {
+                serviceResponse.Success = true;
+                serviceResponse.Data = data;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Data = null;
+            }
+            return serviceResponse;
         }
 
         [HttpPost("insert")]  

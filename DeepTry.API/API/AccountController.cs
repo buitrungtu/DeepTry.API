@@ -21,22 +21,22 @@ namespace DeepTry.API.API
             _accountService = accountService;
         }
 
-        [HttpPost("insert_account")]
-        public IActionResult InsertAccount([FromBody] Account acc)
+        [HttpGet("test_exec")]
+        public ServiceResponse InsertAccount()
         {
             ServiceResponse serviceResponse = new ServiceResponse();
-            int affectRows = (int)_accountService.ExecProc("Proc_InsertAccount", new
+            var result = _accountService.ExecProc("Proc_GetCustomer",new { }, 1);
+            if (result != null)
             {
-                account_name = acc.account_name,
-                password = acc.password,
-                is_admin = acc.is_admin,
-                company_id = acc.company_id,
-                branch_id = acc.branch_id
-            }, 0);
-            if (affectRows > 0)
-                return CreatedAtAction("POST", affectRows);
+                serviceResponse.Success = true;
+                serviceResponse.Data = result;
+                return serviceResponse;
+            }
             else
-                return BadRequest(serviceResponse);
+            {
+                serviceResponse.Success = false;
+                return serviceResponse;
+            }
         }
     }
 }

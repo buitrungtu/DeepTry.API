@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "egTD87692zg/0SFRyz7RDAcVsWmmuQdmGsWv7uYRHEIEzW1b1Dq9sdZP2+X57yVBsWoRf49R+whEuowv2vTonQ==",
+  "dgSpecHash": "d1e2ta9NETk14g+Cr2cYNuxcIJ0a7MeJjIMVTEeKUYyBa7B0eSE2463Ix1jcOuUKiiPRVO3kT7bvLjFFmy02Dg==",
   "success": true,
   "projectFilePath": "D:\\Coding\\DeepTry.API\\DeepTry.BL\\DeepTry.BL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
