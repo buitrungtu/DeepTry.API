@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -29,7 +30,7 @@ namespace DeepTry.DL
             _sqlConnection.Open();
             // Đối tượng xử lý command:
             _sqlCommand = _sqlConnection.CreateCommand();
-            _sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            _sqlCommand.CommandType = System.Data.CommandType.StoredProcedure; //Base chỉ hỗ trợ proc
         }
 
         /// <summary>
@@ -189,10 +190,10 @@ namespace DeepTry.DL
         /// </summary>
         /// <param name="procName">Tên proc</param>
         /// <param name="p_parameters">object các tham số truyền vào</param
-        /// <param name="action"> 0 - Insert or Update, 1 -  Get </param>
+        /// <param name="action"> Proc này đọc hay là ghi </param>
         /// <returns></returns>
         /// @bttu
-        public object ExecProc(string procName, object p_parameters, int action = 0)
+        public object ExecProc(string procName, object p_parameters, string action = "Read")
         {
             try
             {
@@ -214,18 +215,18 @@ namespace DeepTry.DL
                         }
                     }
                 }
-                if(action == 0)
+                if(action.ToLower() == "write")
                 {
                     var affectRows = _sqlCommand.ExecuteNonQuery();
                     return affectRows;
                 }
                 else
                 {
-                    var objs = new List<Dictionary<string,string>>();
+                    var objs = new List<JObject>();
                     SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                     while (mySqlDataReader.Read())
                     {
-                        Dictionary<string, string> obj = new Dictionary<string, string>();
+                        JObject obj = new JObject();
 
                         for (int i = 0; i < mySqlDataReader.FieldCount; i++)
                         {
@@ -254,6 +255,59 @@ namespace DeepTry.DL
             }
         }
 
+        /// <summary>
+        /// Thực thi câu lệnh sql
+        /// </summary>
+        /// <param name="stringQuery">câu truy vấn</param>
+        /// <param name="action"> Chiều đọc hay ghi </param>
+        /// <returns></returns>
+        public object ExecuteQuery(string stringQuery, string action = "Read")
+        {
+            try
+            {
+                _sqlCommand.CommandType = System.Data.CommandType.Text;
+                _sqlCommand.CommandText = $"{stringQuery}";
+                if (action.ToLower() == "write") //Ghi
+                {
+                    var affectRows = _sqlCommand.ExecuteNonQuery();
+
+                    _sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    return affectRows;
+                }
+                else //Đọc
+                {
+                    var objs = new List<JObject>();
+                    SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
+                    while (mySqlDataReader.Read())
+                    {
+                        JObject obj = new JObject();
+
+                        for (int i = 0; i < mySqlDataReader.FieldCount; i++)
+                        {
+                            var columnName = mySqlDataReader.GetName(i);// lấy ra tên trường
+                            var value = mySqlDataReader.GetValue(i);// lấy giá trị trường
+                            if (obj.ContainsKey(columnName))
+                            {
+                                obj[columnName] = value + "";
+                            }
+                            else
+                            {
+                                obj.Add(columnName, value + "");
+
+                            }
+                        }
+                        objs.Add(obj);
+                    }
+                    mySqlDataReader.Close();
+                    _sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    return objs;
+                }
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// Sửa 1 bản ghi

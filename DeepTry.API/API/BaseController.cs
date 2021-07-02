@@ -80,6 +80,51 @@ namespace DeepTry.API.API
                 return BadRequest(serviceResponse);
         }
 
+        /// <summary>
+        /// Gọi API thực thi 1 proc trong db
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost("execute_proc")]
+        public ServiceResponse ExcuteProc([FromBody] DBAction obj)
+        {
+            ServiceResponse serviceResponse = new ServiceResponse();
+            var result = _baseService.ExecProc(obj.StringQuery, obj.Parameter, obj.Action);
+            if (result != null)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = result;
+                return serviceResponse;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                return serviceResponse;
+            }
+        }
+        /// <summary>
+        /// Thực thi 1 câu lệnh nào đó
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost("excute_query")]
+        public ServiceResponse GetDataByQuery([FromBody] DBAction obj)
+        {
+            ServiceResponse serviceResponse = new ServiceResponse();
+            var data = _baseService.ExecuteQuery(obj.StringQuery, obj.Action);
+            if (data != null)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = data;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Data = null;
+            }
+            return serviceResponse;
+        }
+
         [HttpPut("update")]
         public IActionResult Put([FromBody] T obj)
         {
