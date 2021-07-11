@@ -20,23 +20,5 @@ namespace DeepTry.API.API
         {
             _accountService = accountService;
         }
-
-        [HttpGet("test_exec")]
-        public ServiceResponse InsertAccount()
-        {
-            ServiceResponse serviceResponse = new ServiceResponse();
-            var result = _accountService.ExecProc("Proc_GetCustomer",new { }, 1);
-            if (result != null)
-            {
-                serviceResponse.Success = true;
-                serviceResponse.Data = result;
-                return serviceResponse;
-            }
-            else
-            {
-                serviceResponse.Success = false;
-                return serviceResponse;
-            }
-        }
     }
 }
