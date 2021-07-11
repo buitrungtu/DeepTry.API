@@ -37,3 +37,608 @@ as begin
 		values (@branch_code, @branch_name, 1, @company_id);
 	end
 end;
+
+--tqhung - Tạo vài cái proc lởm (pushed_date:11.07.2021)
+create proc Proc_InsertAccount(@account_name varchar(50),
+                               @password varchar(50),
+                               @is_admin int,
+                               @company_id uniqueidentifier,
+                               @branch_id uniqueidentifier,
+                               @create_date datetime,
+                               @create_by nvarchar(255),
+                               @modify_date datetime,
+                               @modify_by nvarchar(255))
+as
+begin
+    if not exists(select 1 from account where account_name = @account_name)
+        begin
+            insert into account (account_name,
+                                 password,
+                                 is_admin,
+                                 company_id,
+                                 branch_id,
+                                 create_date,
+                                 create_by,
+                                 modify_date,
+                                 modify_by)
+            values (@account_name,
+                    @password,
+                    @is_admin,
+                    @company_id,
+                    @branch_id,
+                    @create_date,
+                    @create_by,
+                    @modify_date,
+                    @modify_by);
+        end
+end;
+
+go
+
+
+create proc Proc_UpdateAccount(@account_id uniqueidentifier,
+                               @account_name varchar(50),
+                               @password varchar(50),
+                               @is_admin int,
+                               @company_id uniqueidentifier,
+                               @branch_id uniqueidentifier,
+                               @create_date datetime,
+                               @create_by nvarchar(255),
+                               @modify_date datetime,
+                               @modify_by nvarchar(255))
+as
+begin
+    update account
+    set account_name = @account_name,
+        password     = @password,
+        is_admin     = @is_admin,
+        company_id   = @company_id,
+        branch_id    = @branch_id,
+        create_date  = @create_date,
+        create_by    = @create_by,
+        modify_date  = @modify_date,
+        modify_by    = @modify_by
+    where account_id = @account_id;
+end;
+
+go
+
+create proc Proc_DeleteAccount(@account_id uniqueidentifier)
+as
+begin
+    alter table account
+        nocheck constraint all;
+    delete from account where account_id = @account_id;
+    alter table account
+        check constraint all;
+end;
+go
+
+create proc Proc_InsertBranch(@branch_code varchar(50),
+                              @branch_name nvarchar(255),
+                              @is_parent int,
+                              @company_id uniqueidentifier,
+                              @create_date datetime,
+                              @create_by nvarchar(255),
+                              @modify_date datetime,
+                              @modify_by nvarchar(255))
+as
+begin
+    if not exists(select 1 from branch where branch_name = @branch_name)
+        begin
+            insert into branch (branch_code,
+                                branch_name,
+                                is_parent,
+                                company_id,
+                                create_date,
+                                create_by,
+                                modify_date,
+                                modify_by)
+            values (@branch_code,
+                    @branch_name,
+                    @is_parent,
+                    @company_id,
+                    @create_date,
+                    @create_by,
+                    @modify_date,
+                    @modify_by);
+        end
+end;
+go
+
+create proc Proc_UpdateBranch(@branch_id uniqueidentifier,
+                              @branch_code varchar(50),
+                              @branch_name nvarchar(255),
+                              @is_parent int,
+                              @company_id uniqueidentifier,
+                              @create_date datetime,
+                              @create_by nvarchar(255),
+                              @modify_date datetime,
+                              @modify_by nvarchar(255))
+as
+begin
+    if exists(select 1 from company where company_id = @company_id)
+        begin
+            update branch
+            set branch_code = @branch_code,
+                branch_name = @branch_name,
+                is_parent   = @is_parent,
+                company_id  = @company_id,
+                create_date = @create_date,
+                create_by   = @create_by,
+                modify_date = @modify_date,
+                modify_by   = @modify_by
+            where branch_id = @branch_id;
+        end
+end;
+go
+
+create proc Proc_DeleteBranch(@branch_id uniqueidentifier)
+as
+begin
+    alter table branch
+        nocheck constraint all;
+    delete from branch where branch_id = @branch_id;
+    delete from account where branch_id = @branch_id;
+    delete from customer where branch_id = @branch_id;
+    delete from employee where branch_id = @branch_id;
+    delete from vendor where branch_id = @branch_id;
+    alter table branch
+        check constraint all;
+end;
+go
+
+create proc Proc_InsertCompany(@company_code varchar(50),
+                               @company_name nvarchar(50),
+                               @create_date datetime,
+                               @create_by nvarchar(50),
+                               @modify_date datetime,
+                               @modify_by nvarchar(50),
+                               @branch_code varchar(50),
+                               @branch_name nvarchar(255),
+                               @is_parent int)
+as
+begin
+    declare @company_id uniqueidentifier;
+    set @company_id = newid();
+    insert into company (company_id,
+                         company_code,
+                         company_name,
+                         create_date,
+                         create_by,
+                         modify_date,
+                         modify_by)
+    values (@company_id,
+            @company_code,
+            @company_name,
+            @create_date,
+            @create_by,
+            @modify_date,
+            @modify_by);
+
+    insert into branch (branch_code,
+                        branch_name,
+                        is_parent,
+                        company_id,
+                        create_date,
+                        create_by,
+                        modify_date,
+                        modify_by)
+    values (@branch_code,
+            @branch_name,
+            @is_parent,
+            @company_id,
+            @create_date,
+            @create_by,
+            @modify_date,
+            @modify_by);
+
+end;
+go
+
+create proc Proc_UpdateCompany(@company_id uniqueidentifier,
+                               @company_code varchar(50),
+                               @company_name nvarchar(50),
+                               @create_date datetime,
+                               @create_by nvarchar(50),
+                               @modify_date datetime,
+                               @modify_by nvarchar(50))
+as
+begin
+    update company
+    set company_code = @company_code,
+        company_name = @company_name,
+        create_date  = @create_date,
+        create_by    = @create_by,
+        modify_date  = @modify_date,
+        modify_by    = @modify_by
+    where company_id = @company_id;
+end;
+go
+
+create proc Proc_DeleteCompany(@company_id uniqueidentifier)
+as
+begin
+    declare @branch_id uniqueidentifier;
+    alter table company
+        nocheck constraint all;
+    delete from company where company_id = @company_id;
+    delete from branch where company_id = @company_id;
+    delete from account where company_id = @company_id;
+    delete from account where branch_id in (select branch_id from branch where company_id = @company_id);
+    delete from customer where branch_id in (select branch_id from branch where company_id = @company_id);
+    delete from employee where branch_id in (select branch_id from branch where company_id = @company_id);
+    delete from vendor where branch_id in (select branch_id from branch where company_id = @company_id);
+    alter table company
+        check constraint all;
+end;
+go
+
+create proc Proc_InsertCustomer(@customer_code varchar(50),
+                                @customer_name nvarchar(255),
+                                @birthday date,
+                                @address nvarchar(255),
+                                @phone varchar(20),
+                                @mail varchar(255),
+                                @sex int,
+                                @customer_type int,
+                                @debt_amount bigint,
+                                @quanlity_buy int,
+                                @description nvarchar(500),
+                                @branch_id uniqueidentifier,
+                                @create_date datetime,
+                                @create_by nvarchar(255),
+                                @modify_date datetime,
+                                @modify_by nvarchar(255))
+as
+begin
+    insert into customer (customer_code,
+                          customer_name,
+                          birthday,
+                          address,
+                          phone,
+                          mail,
+                          sex,
+                          customer_type,
+                          debt_amount,
+                          quanlity_buy,
+                          description,
+                          branch_id,
+                          create_date,
+                          create_by,
+                          modify_date,
+                          modify_by)
+    values (@customer_code,
+            @customer_name,
+            @birthday,
+            @address,
+            @phone,
+            @mail,
+            @sex,
+            @customer_type,
+            @debt_amount,
+            @quanlity_buy,
+            @description,
+            @branch_id,
+            @create_date,
+            @create_by,
+            @modify_date,
+            @modify_by);
+end;
+go
+
+create proc Proc_UpdateCustomer(@customer_id uniqueidentifier,
+                                @customer_code varchar(50),
+                                @customer_name nvarchar(255),
+                                @birthday date,
+                                @address nvarchar(255),
+                                @phone varchar(20),
+                                @mail varchar(255),
+                                @sex int,
+                                @customer_type int,
+                                @debt_amount bigint,
+                                @quanlity_buy int,
+                                @description nvarchar(500),
+                                @branch_id uniqueidentifier,
+                                @create_date datetime,
+                                @create_by nvarchar(255),
+                                @modify_date datetime,
+                                @modify_by nvarchar(255))
+as
+begin
+    update customer
+    set customer_code = @customer_code,
+        customer_name = @customer_name,
+        birthday      = @birthday,
+        address       = @address,
+        phone         = @phone,
+        mail          = @mail,
+        sex           = @sex,
+        customer_type = @customer_type,
+        debt_amount   = @debt_amount,
+        quanlity_buy  = @quanlity_buy,
+        description   = @description,
+        branch_id     = @branch_id,
+        create_date   = @create_date,
+        create_by     = @create_by,
+        modify_date   = @modify_date,
+        modify_by     = @modify_by
+    where customer_id = @customer_id;
+end;
+go
+
+create proc Proc_DeleteCustomer(@customer_id uniqueidentifier)
+as
+begin
+    alter table customer
+        nocheck constraint all;
+    delete from customer where customer_id = @customer_id;
+    alter table customer
+        check constraint all;
+end;
+go
+
+create proc Proc_InsertEmployee(@employee_code varchar(50),
+                                @employee_name nvarchar(255),
+                                @birthday date,
+                                @address nvarchar(255),
+                                @phone varchar(20),
+                                @mail varchar(255),
+                                @salary bigint,
+                                @sex int,
+                                @position int,
+                                @department int,
+                                @tax_code varchar(50),
+                                @date_join date,
+                                @status int,
+                                @avatar_link nvarchar(max),
+                                @description nvarchar(500),
+                                @branch_id uniqueidentifier,
+                                @create_date datetime,
+                                @create_by nvarchar(255),
+                                @modify_date datetime,
+                                @modify_by nvarchar(255))
+as
+begin
+    insert into employee (employee_code,
+                          employee_name,
+                          birthday,
+                          address,
+                          phone,
+                          mail,
+                          salary,
+                          sex,
+                          position,
+                          department,
+                          tax_code,
+                          date_join,
+                          status,
+                          avatar_link,
+                          description,
+                          branch_id,
+                          create_date,
+                          create_by,
+                          modify_date,
+                          modify_by)
+    values (@employee_code,
+            @employee_name,
+            @birthday,
+            @address,
+            @phone,
+            @mail,
+            @salary,
+            @sex,
+            @position,
+            @department,
+            @tax_code,
+            @date_join,
+            @status,
+            @avatar_link,
+            @description,
+            @branch_id,
+            @create_date,
+            @create_by,
+            @modify_date,
+            @modify_by);
+end;
+go
+
+create proc Proc_UpdateEmployee(@employee_id uniqueidentifier,
+                                @employee_code varchar(50),
+                                @employee_name nvarchar(255),
+                                @birthday date,
+                                @address nvarchar(255),
+                                @phone varchar(20),
+                                @mail varchar(255),
+                                @salary bigint,
+                                @sex int,
+                                @position int,
+                                @department int,
+                                @tax_code varchar(50),
+                                @date_join date,
+                                @status int,
+                                @avatar_link nvarchar(max),
+                                @description nvarchar(500),
+                                @branch_id uniqueidentifier,
+                                @create_date datetime,
+                                @create_by nvarchar(255),
+                                @modify_date datetime,
+                                @modify_by nvarchar(255))
+as
+begin
+    update employee
+    set employee_code = @employee_code,
+        employee_name = @employee_name,
+        birthday      = @birthday,
+        address       = @address,
+        phone         = @phone,
+        mail          = @mail,
+        salary        = @salary,
+        sex           = @sex,
+        position      = @position,
+        department    = @department,
+        tax_code      = @tax_code,
+        date_join     = @date_join,
+        status        = @status,
+        avatar_link   = @avatar_link,
+        description   = @description,
+        branch_id     = @branch_id,
+        create_date   = @create_date,
+        create_by     = @create_by,
+        modify_date   = @modify_date,
+        modify_by     = @modify_by
+    where employee_id = @employee_id;
+end;
+go
+
+create proc Proc_DeleteEmployee(@employee_id uniqueidentifier)
+as
+begin
+    alter table employee
+        nocheck constraint all;
+    delete from employee where employee_id = @employee_id;
+    delete from vendor where employee_id = @employee_id;
+    alter table employee
+        check constraint all;
+end;
+go
+
+create proc Proc_InsertVendor(@vendor_code varchar(50),
+                              @vendor_name nvarchar(255),
+                              @address nvarchar(255),
+                              @phone varchar(20),
+                              @mail varchar(255),
+                              @tax_code varchar(50),
+                              @website varchar(250),
+                              @vendor_type int,
+                              @employee_id uniqueidentifier,
+                              @contact_vocative int,
+                              @contact_name nvarchar(255),
+                              @contact_email varchar(255),
+                              @contact_phone varchar(20),
+                              @contact_legal nvarchar(255),
+                              @debt_amount bigint,
+                              @debt_max_amount bigint,
+                              @debt_max_date int,
+                              @description nvarchar(500),
+                              @branch_id uniqueidentifier,
+                              @create_date datetime,
+                              @create_by nvarchar(255),
+                              @modify_date datetime,
+                              @modify_by nvarchar(255))
+as
+begin
+    insert into vendor (vendor_code,
+                        vendor_name,
+                        address,
+                        phone,
+                        mail,
+                        tax_code,
+                        website,
+                        vendor_type,
+                        employee_id,
+                        contact_vocative,
+                        contact_name,
+                        contact_email,
+                        contact_phone,
+                        contact_legal,
+                        debt_amount,
+                        debt_max_amount,
+                        debt_max_date,
+                        description,
+                        branch_id,
+                        create_date,
+                        create_by,
+                        modify_date,
+                        modify_by)
+    values (@vendor_code,
+            @vendor_name,
+            @address,
+            @phone,
+            @mail,
+            @tax_code,
+            @website,
+            @vendor_type,
+            @employee_id,
+            @contact_vocative,
+            @contact_name,
+            @contact_email,
+            @contact_phone,
+            @contact_legal,
+            @debt_amount,
+            @debt_max_amount,
+            @debt_max_date,
+            @description,
+            @branch_id,
+            @create_date,
+            @create_by,
+            @modify_date,
+            @modify_by);
+end;
+go
+
+create proc Proc_UpdateVendor(@vendor_id uniqueidentifier,
+                              @vendor_code varchar(50),
+                              @vendor_name nvarchar(255),
+                              @address nvarchar(255),
+                              @phone varchar(20),
+                              @mail varchar(255),
+                              @tax_code varchar(50),
+                              @website varchar(250),
+                              @vendor_type int,
+                              @employee_id uniqueidentifier,
+                              @contact_vocative int,
+                              @contact_name nvarchar(255),
+                              @contact_email varchar(255),
+                              @contact_phone varchar(20),
+                              @contact_legal nvarchar(255),
+                              @debt_amount bigint,
+                              @debt_max_amount bigint,
+                              @debt_max_date int,
+                              @description nvarchar(500),
+                              @branch_id uniqueidentifier,
+                              @create_date datetime,
+                              @create_by nvarchar(255),
+                              @modify_date datetime,
+                              @modify_by nvarchar(255))
+as
+begin
+    update vendor
+    set vendor_code      = @vendor_code,
+        vendor_name      = @vendor_name,
+        address          = @address,
+        phone            = @phone,
+        mail             = @mail,
+        tax_code         = @tax_code,
+        website          = @website,
+        vendor_type      = @vendor_type,
+        employee_id      = @employee_id,
+        contact_vocative = @contact_vocative,
+        contact_name     = @contact_name,
+        contact_email    = @contact_email,
+        contact_phone    = @contact_phone,
+        contact_legal    = @contact_legal,
+        debt_amount      = @debt_amount,
+        debt_max_amount  = @debt_max_amount,
+        debt_max_date    = @debt_max_date,
+        description      = @description,
+        branch_id        = @branch_id,
+        create_date      = @create_date,
+        create_by        = @create_by,
+        modify_date      = @modify_date,
+        modify_by        = @modify_by
+    where vendor_id = @vendor_id;
+end;
+go
+
+create proc Proc_DeleteVendor(@vendor_id uniqueidentifier)
+as
+begin
+    alter table vendor
+        nocheck constraint all;
+    delete from vendor where vendor_id = @vendor_id;
+    alter table vendor
+        check constraint all;
+end;
+go
+
