@@ -11,15 +11,8 @@ namespace DeepTry.DL
 {
     public class DBContext<T>
     {
-        readonly string _connectionString = "Server=DESKTOP-5K2RFED\\SQLEXPRESS;Database=QLCNH;Trusted_Connection=True;";
-        /// <summary>
-        /// ConnectionString:
-        /// bttu: "Server=DESKTOP-5K2RFED\\SQLEXPRESS;Database=QLCNH;Trusted_Connection=True;"
-        /// ndviet:
-        /// nh:
-        /// lvthang:
-        /// tqhung:
-        /// </summary>
+        readonly string _connectionString = "workstation id=DeepTryDB.mssql.somee.com;packet size=4096;user id=tudefttry_SQLLogin_1;pwd=utnl7fvzym;data source=DeepTryDB.mssql.somee.com;persist security info=False;initial catalog=DeepTryDB";
+        
         SqlConnection _sqlConnection;
         SqlCommand _sqlCommand;
 
