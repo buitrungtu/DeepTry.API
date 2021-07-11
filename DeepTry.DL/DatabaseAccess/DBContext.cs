@@ -40,7 +40,7 @@ namespace DeepTry.DL
         /// <param name="record"></param>
         /// <returns></returns>
         /// @bttu 27.6.2021
-        public IEnumerable<T> GetDataByPage(int page, int record)
+        public IEnumerable<T> GetDataByPage(int page, int record, Guid branchId)
         {
             try
             {
@@ -49,6 +49,7 @@ namespace DeepTry.DL
                 _sqlCommand.CommandText = $"Proc_Get{className}sByPage";
                 _sqlCommand.Parameters.AddWithValue("PageLimit", record);
                 _sqlCommand.Parameters.AddWithValue("Count", page);
+                _sqlCommand.Parameters.AddWithValue("BranchId", branchId);
 
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
@@ -173,8 +174,88 @@ namespace DeepTry.DL
                     //Lấy ra property có tên là paramName và không phân biệt hoa thường
                     var property = obj.GetType().GetProperty(paramName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
-                        param.Value = property.GetValue(obj);
+                    {
+                        if(property.GetValue(obj) == null)
+                        {
+                            switch (param.DbType)
+                            {
+                                case System.Data.DbType.Guid:
+                                    param.Value = new Guid("00000000-0000-0000-0000-000000000000");
+                                    break;
+                                case System.Data.DbType.DateTime:
+                                    param.Value = DateTime.Now;
+                                    break;
+                                case System.Data.DbType.AnsiString:
+                                case System.Data.DbType.String:
+                                    param.Value = "";
+                                    break;
+                                default:
+                                    param.Value = 0;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            param.Value = property.GetValue(obj);
+                        }
+                    }
 
+                }
+                var affectRows = _sqlCommand.ExecuteNonQuery();
+                return affectRows;
+            }
+            catch(Exception ex)
+            {
+                return 0;
+            }
+
+        }
+        
+        /// <summary>
+        /// Sửa 1 bản ghi
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        /// @bttu 27.6.2021
+        public int Update(T obj)
+        {
+            try
+            {
+                var objType = typeof(T).Name;
+                _sqlCommand.CommandText = $"Proc_Update{objType}";
+                SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
+                var parameters = _sqlCommand.Parameters;
+                foreach (SqlParameter param in parameters)
+                {
+                    var paramName = param.ParameterName.Replace("@", "");
+                    //Lấy ra property có tên là paramName và không phân biệt hoa thường
+                    var property = obj.GetType().GetProperty(paramName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (property != null)
+                    {
+                        if (property.GetValue(obj) == null)
+                        {
+                            switch (param.DbType)
+                            {
+                                case System.Data.DbType.Guid:
+                                    param.Value = new Guid("00000000-0000-0000-0000-000000000000");
+                                    break;
+                                case System.Data.DbType.DateTime:
+                                    param.Value = DateTime.Now;
+                                    break;
+                                case System.Data.DbType.AnsiString:
+                                case System.Data.DbType.String:
+                                    param.Value = "";
+                                    break;
+                                default:
+                                    param.Value = 0;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            param.Value = property.GetValue(obj);
+                        }
+                    }
                 }
                 var affectRows = _sqlCommand.ExecuteNonQuery();
                 return affectRows;
@@ -185,6 +266,34 @@ namespace DeepTry.DL
             }
 
         }
+
+        /// <summary>
+        /// Xóa 1 bản ghi
+        /// </summary>
+        /// <param name="objId"></param>
+        /// <returns></returns>
+        /// @bttu 27.6.2021
+        public int Delete(Guid objId)
+        {
+            try
+            {
+                var objType = typeof(T).Name;
+                _sqlCommand.CommandText = $"Proc_Delete{objType}";
+                SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
+                if (_sqlCommand.Parameters.Count > 0)
+                {
+                    _sqlCommand.Parameters[1].Value = objId;
+                }
+                var affectRows = _sqlCommand.ExecuteNonQuery();
+                return affectRows;
+            }
+            catch
+            {
+                return 0;
+            }
+
+        }
+
         /// <summary>
         /// Thực hiện exec 1 proc trong db
         /// </summary>
@@ -203,9 +312,9 @@ namespace DeepTry.DL
                 foreach (SqlParameter param in parameters)
                 {
                     var paramName = param.ParameterName.Replace("@", "");
-                    if(paramName != "RETURN_VALUE")
+                    if (paramName != "RETURN_VALUE")
                     {
-                        if(param.DbType is System.Data.DbType.Guid)
+                        if (param.DbType is System.Data.DbType.Guid)
                         {
                             param.Value = new Guid(p_parameters.GetType().GetProperty($"{paramName}").GetValue(p_parameters, null).ToString());
                         }
@@ -215,7 +324,7 @@ namespace DeepTry.DL
                         }
                     }
                 }
-                if(action.ToLower() == "write")
+                if (action.ToLower() == "write")
                 {
                     var affectRows = _sqlCommand.ExecuteNonQuery();
                     return affectRows;
@@ -230,7 +339,7 @@ namespace DeepTry.DL
 
                         for (int i = 0; i < mySqlDataReader.FieldCount; i++)
                         {
-                            
+
                             var columnName = mySqlDataReader.GetName(i);// lấy ra tên trường
                             var value = mySqlDataReader.GetValue(i);// lấy giá trị trường
                             if (obj.ContainsKey(columnName))
@@ -303,71 +412,14 @@ namespace DeepTry.DL
                     return objs;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
         }
 
-        /// <summary>
-        /// Sửa 1 bản ghi
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        /// @bttu 27.6.2021
-        public int Update(T obj)
-        {
-            try
-            {
-                var objType = typeof(T).Name;
-                _sqlCommand.CommandText = $"Proc_Update{objType}";
-                SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
-                var parameters = _sqlCommand.Parameters;
-                foreach (SqlParameter param in parameters)
-                {
-                    var paramName = param.ParameterName.Replace("@", "");
-                    //Lấy ra property có tên là paramName và không phân biệt hoa thường
-                    var property = obj.GetType().GetProperty(paramName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if (property != null)
-                        param.Value = property.GetValue(obj);
 
-                }
-                var affectRows = _sqlCommand.ExecuteNonQuery();
-                return affectRows;
-            }
-            catch
-            {
-                return 0;
-            }
 
-        }
-
-        /// <summary>
-        /// Xóa 1 bản ghi
-        /// </summary>
-        /// <param name="objId"></param>
-        /// <returns></returns>
-        /// @bttu 27.6.2021
-        public int Delete(Guid objId)
-        {
-            try
-            {
-                var objType = typeof(T).Name;
-                _sqlCommand.CommandText = $"Proc_Delete{objType}";
-                SqlCommandBuilder.DeriveParameters(_sqlCommand);//Lấy ra các tham số cần truyền của proc
-                if (_sqlCommand.Parameters.Count > 0)
-                {
-                    _sqlCommand.Parameters[0].Value = objId;
-                }
-                var affectRows = _sqlCommand.ExecuteNonQuery();
-                return affectRows;
-            }
-            catch
-            {
-                return 0;
-            }
-
-        }
 
         //Đóng kết nối
         public void Dispose()

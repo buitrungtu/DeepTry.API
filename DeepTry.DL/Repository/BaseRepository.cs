@@ -12,14 +12,13 @@ namespace DeepTry.DL.Repository
         {
             _databaseContext = databaseContext;
         }
-
         public IEnumerable<T> GetFullData()
         {
             return _databaseContext.GetFullData();
         }
-        public IEnumerable<T> GetDataByPage(int page, int record)
+        public IEnumerable<T> GetDataByPage(int page, int record, Guid branchId)
         {
-            return _databaseContext.GetDataByPage(page, record);
+            return _databaseContext.GetDataByPage(page, record, branchId);
         }
         public T GetByID(object objID)
         {
@@ -29,7 +28,6 @@ namespace DeepTry.DL.Repository
         {
             return _databaseContext.Insert(obj);
         }
-
         public int Update(T obj)
         {
             return _databaseContext.Update(obj);
@@ -42,7 +40,6 @@ namespace DeepTry.DL.Repository
         {
             return _databaseContext.ExecProc(proc, parameters, action);
         }
-
         public object ExecuteQuery(string stringQuery, string action)
         {
             return _databaseContext.ExecuteQuery(stringQuery, action);

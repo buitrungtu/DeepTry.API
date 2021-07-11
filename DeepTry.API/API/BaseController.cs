@@ -29,12 +29,12 @@ namespace DeepTry.API.API
 
         // GET: api/<BaseAPI>
         [HttpGet("get_by_page")]
-        public IActionResult GetByPaging(int page, int record)
+        public IActionResult GetByPaging(int page, int record, Guid branchId)
         {
             var pagingObject = new PagingObject();
             pagingObject.TotalRecord = _baseService.GetFullData().Count();
             pagingObject.TotalPage = Convert.ToInt32(Math.Ceiling((decimal)pagingObject.TotalRecord / (decimal)record));
-            pagingObject.Data = _baseService.GetDataByPage(record * (page - 1), record);
+            pagingObject.Data = _baseService.GetDataByPage(record * (page - 1), record, branchId);
             if (pagingObject.Data != null)
                 return Ok(pagingObject);
             else
@@ -80,6 +80,31 @@ namespace DeepTry.API.API
                 return BadRequest(serviceResponse);
         }
 
+        [HttpPut("update")]
+        public IActionResult Put([FromBody] T obj)
+        {
+            var serviceResponse = _baseService.Update(obj);
+            var affectRows = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
+            if (affectRows > 0)
+                return CreatedAtAction("PUT", affectRows);
+            else
+                return BadRequest(serviceResponse);
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete(Guid id)
+        {
+            var serviceResponse = _baseService.Delete(id);
+            var affectRows = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
+            if (affectRows > 0)
+                return CreatedAtAction("DELETE", affectRows);
+            else
+            {
+                serviceResponse.Message.Add("Không tìm thấy bản ghi này");
+                return BadRequest(serviceResponse);
+            }
+        }
+
         /// <summary>
         /// Gọi API thực thi 1 proc trong db
         /// </summary>
@@ -123,31 +148,6 @@ namespace DeepTry.API.API
                 serviceResponse.Data = null;
             }
             return serviceResponse;
-        }
-
-        [HttpPut("update")]
-        public IActionResult Put([FromBody] T obj)
-        {
-            var serviceResponse = _baseService.Update(obj);
-            var affectRows = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
-            if (affectRows > 0)
-                return CreatedAtAction("PUT", affectRows);
-            else
-                return BadRequest(serviceResponse);
-        }
-
-        [HttpDelete("delete")]
-        public IActionResult Delete([FromRoute] Guid objID)
-        {
-            var serviceResponse = _baseService.Delete(objID);
-            var affectRows = serviceResponse.Data != null ? ((int)serviceResponse.Data) : 0;
-            if (affectRows > 0)
-                return CreatedAtAction("DELETE", affectRows);
-            else
-            {
-                serviceResponse.Message.Add("Không tìm thấy bản ghi này");
-                return BadRequest(serviceResponse);
-            }
         }
     }
 }

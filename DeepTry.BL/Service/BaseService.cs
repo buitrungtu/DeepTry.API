@@ -13,43 +13,64 @@ namespace DeepTry.BL.Service
         {
             _baseRepository = customerRepository;
         }
-
-        public ServiceResponse Delete(Guid objId)
-        {
-            var serviceResponse = new ServiceResponse();
-            serviceResponse.Success = true;
-            serviceResponse.Message.Add("Thành công");
-            serviceResponse.Data = _baseRepository.Delete(objId);
-            return serviceResponse;
-        }
-
         public IEnumerable<T> GetFullData()
         {
             return _baseRepository.GetFullData();
         }
 
-        public IEnumerable<T> GetDataByPage(int page, int record)
+        public IEnumerable<T> GetDataByPage(int page, int record, Guid branchId)
         {
-            return _baseRepository.GetDataByPage(page, record);
+            return _baseRepository.GetDataByPage(page, record, branchId);
         }
 
         public T GetById(object objId)
         {
             return _baseRepository.GetByID(objId);
         }
-
         public ServiceResponse Insert(T obj)
         {
             var serviceResponse = new ServiceResponse();
             if (Validate(obj, "POST") == true) //check thông tin
             {
                 serviceResponse.Success = true;
-                serviceResponse.Message.Add("Thành công");
                 serviceResponse.Data = _baseRepository.Insert(obj);
+                if ((int)serviceResponse.Data > 0)
+                {
+                    serviceResponse.Message.Add("Thêm thành công");
+                }
             }
             else
             {
                 serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
+        public ServiceResponse Update(T obj)
+        {
+            var serviceResponse = new ServiceResponse();
+            if (Validate(obj, "PUT") == true)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = _baseRepository.Update(obj);
+                if ((int)serviceResponse.Data > 0)
+                {
+                    serviceResponse.Message.Add("Sửa thành công");
+                }
+            }
+            else
+            {
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
+        public ServiceResponse Delete(Guid objId)
+        {
+            var serviceResponse = new ServiceResponse();
+            serviceResponse.Success = true;
+            serviceResponse.Data = _baseRepository.Delete(objId);
+            if ((int)serviceResponse.Data > 0)
+            {
+                serviceResponse.Message.Add("Xóa thành công");
             }
             return serviceResponse;
         }
@@ -60,21 +81,6 @@ namespace DeepTry.BL.Service
         public object ExecuteQuery(string stringQuery, string action)
         {
             return _baseRepository.ExecuteQuery(stringQuery, action);
-        }
-        public ServiceResponse Update(T obj)
-        {
-            var serviceResponse = new ServiceResponse();
-            if (Validate(obj, "PUT") == true)
-            {
-                serviceResponse.Success = true;
-                serviceResponse.Message.Add("Thành công");
-                serviceResponse.Data = _baseRepository.Update(obj);
-            }
-            else
-            {
-                serviceResponse.Success = false;
-            }
-            return serviceResponse;
         }
 
         /// <summary>
