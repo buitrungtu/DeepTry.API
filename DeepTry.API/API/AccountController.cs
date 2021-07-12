@@ -20,5 +20,28 @@ namespace DeepTry.API.API
         {
             _accountService = accountService;
         }
+
+        /// <summary>
+        /// Đăng nhập
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost("login")]
+        public ServiceResponse Login([FromBody] Account acc)
+        {
+            ServiceResponse serviceResponse = new ServiceResponse();
+            var result = _accountService.ExecProc("Proc_SignIn", acc, "read");
+            if (result != null)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = result;
+                return serviceResponse;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                return serviceResponse;
+            }
+        }
     }
 }

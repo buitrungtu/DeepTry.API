@@ -136,7 +136,15 @@ namespace DeepTry.API.API
         public ServiceResponse GetDataByQuery([FromBody] DBAction obj)
         {
             ServiceResponse serviceResponse = new ServiceResponse();
-            var data = _baseService.ExecuteQuery(obj.StringQuery, obj.Action);
+            obj.StringQuery = obj.StringQuery.ToLower();
+            if(obj.StringQuery.Contains("update") || obj.StringQuery.Contains("delete") || obj.StringQuery.Contains("database"))
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message.Add("Trong câu query chứa từ khóa cấm. Chức năng này chỉ được sử dụng để kiểm tra dữ liệu");
+                serviceResponse.Data = null;
+                return serviceResponse;
+            }
+            var data = _baseService.ExecuteQuery(obj.StringQuery, "write");
             if (data != null)
             {
                 serviceResponse.Success = true;
