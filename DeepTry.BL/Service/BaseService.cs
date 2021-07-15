@@ -13,9 +13,9 @@ namespace DeepTry.BL.Service
         {
             _baseRepository = customerRepository;
         }
-        public IEnumerable<T> GetFullData()
+        public IEnumerable<T> GetFullData(Guid branchId)
         {
-            return _baseRepository.GetFullData();
+            return _baseRepository.GetFullData(branchId);
         }
 
         public IEnumerable<T> GetDataByPage(int page, int record, Guid branchId)

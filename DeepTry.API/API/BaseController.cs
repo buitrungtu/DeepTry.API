@@ -21,18 +21,13 @@ namespace DeepTry.API.API
             _baseService = baseService;
         }
 
-        [HttpGet("get_by_test")]
-        public string Test()
-        {
-            return "test";
-        }
 
         // GET: api/<BaseAPI>
         [HttpGet("get_by_page")]
         public IActionResult GetByPaging(int page, int record, Guid branchId)
         {
             var pagingObject = new PagingObject();
-            pagingObject.TotalRecord = _baseService.GetFullData().Count();
+            pagingObject.TotalRecord = _baseService.GetFullData(branchId).Count();
             pagingObject.TotalPage = Convert.ToInt32(Math.Ceiling((decimal)pagingObject.TotalRecord / (decimal)record));
             pagingObject.Data = _baseService.GetDataByPage(record * (page - 1), record, branchId);
             if (pagingObject.Data != null)
@@ -53,10 +48,10 @@ namespace DeepTry.API.API
         }
 
         [HttpGet("get_full_data")]
-        public ServiceResponse GetFullData()
+        public ServiceResponse GetFullData(Guid branchId)
         {
             ServiceResponse serviceResponse = new ServiceResponse();
-            var data = _baseService.GetFullData();
+            var data = _baseService.GetFullData(branchId);
             if (data != null) {
                 serviceResponse.Success = true;
                 serviceResponse.Data = data;

@@ -40,9 +40,10 @@ namespace DeepTry.DL
                 var objs = new List<T>();
                 var className = typeof(T).Name; // Lấy ra kiểu dữ liệu
                 _sqlCommand.CommandText = $"Proc_Get{className}sByPage";
-                _sqlCommand.Parameters.AddWithValue("PageLimit", record);
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.Parameters.AddWithValue("brandID", branchId);
                 _sqlCommand.Parameters.AddWithValue("Count", page);
-                _sqlCommand.Parameters.AddWithValue("BranchId", branchId);
+                _sqlCommand.Parameters.AddWithValue("PageLimit", record);
 
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
@@ -63,7 +64,7 @@ namespace DeepTry.DL
                 mySqlDataReader.Close();
                 return objs;
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }
@@ -75,13 +76,15 @@ namespace DeepTry.DL
         /// </summary>
         /// <returns></returns>
         /// @bttu 27.6.2021
-        public IEnumerable<T> GetFullData()
+        public IEnumerable<T> GetFullData(Guid branchId)
         {
             try
             {
                 var objs = new List<T>();
                 var className = typeof(T).Name;
-                _sqlCommand.CommandText = $"Proc_Get{className}";
+                _sqlCommand.CommandText = $"Proc_Get{className}s";
+                _sqlCommand.Parameters.Clear();
+                _sqlCommand.Parameters.AddWithValue("brandID", branchId);
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {

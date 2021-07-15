@@ -12,9 +12,9 @@ namespace DeepTry.DL.Repository
         {
             _databaseContext = databaseContext;
         }
-        public IEnumerable<T> GetFullData()
+        public IEnumerable<T> GetFullData(Guid branchId)
         {
-            return _databaseContext.GetFullData();
+            return _databaseContext.GetFullData(branchId);
         }
         public IEnumerable<T> GetDataByPage(int page, int record, Guid branchId)
         {
