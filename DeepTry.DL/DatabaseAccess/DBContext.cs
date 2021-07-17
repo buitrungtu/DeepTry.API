@@ -305,19 +305,13 @@ namespace DeepTry.DL
                 _sqlCommand.CommandText = $"{procName}";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand); //Lấy ra các tham số cần truyền của proc
                 var parameters = _sqlCommand.Parameters;
+                JObject parameter = JObject.Parse(p_parameters.ToString());
                 foreach (SqlParameter param in parameters)
                 {
                     var paramName = param.ParameterName.Replace("@", "");
                     if (paramName != "RETURN_VALUE")
                     {
-                        if (param.DbType is System.Data.DbType.Guid)
-                        {
-                            param.Value = new Guid(p_parameters.GetType().GetProperty($"{paramName}").GetValue(p_parameters, null).ToString());
-                        }
-                        else
-                        {
-                            param.Value = p_parameters.GetType().GetProperty($"{paramName}").GetValue(p_parameters, null);
-                        }
+                        param.Value = parameter[paramName].ToString();
                     }
                 }
                 if (action.ToLower() == "write")

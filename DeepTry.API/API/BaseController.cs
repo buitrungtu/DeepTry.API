@@ -100,6 +100,7 @@ namespace DeepTry.API.API
             }
         }
 
+
         /// <summary>
         /// Gọi API thực thi 1 proc trong db
         /// </summary>
@@ -137,9 +138,9 @@ namespace DeepTry.API.API
                 serviceResponse.Success = false;
                 serviceResponse.Message.Add("Trong câu query chứa từ khóa cấm. Chức năng này chỉ được sử dụng để kiểm tra dữ liệu");
                 serviceResponse.Data = null;
-                return serviceResponse;
+                return serviceResponse; 
             }
-            var data = _baseService.ExecuteQuery(obj.StringQuery, "write");
+            var data = _baseService.ExecuteQuery(obj.StringQuery, "read");
             if (data != null)
             {
                 serviceResponse.Success = true;

@@ -20,7 +20,49 @@ namespace DeepTry.API.API
         {
             _accountService = accountService;
         }
+        /// <summary>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost("create_account_company")]
+        public ServiceResponse CreateAccountCompany([FromBody] object obj)
+        {
+            ServiceResponse serviceResponse = new ServiceResponse();
+            var result = _accountService.ExecProc("Proc_CreateAccountCompany", obj, "Write");
+            if (result != null)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = result;
+                return serviceResponse;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                return serviceResponse;
+            }
+        }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost("create_account_branch")]
+        public ServiceResponse CreateAccountBranch([FromBody] object obj)
+        {
+            ServiceResponse serviceResponse = new ServiceResponse();
+            var result = _accountService.ExecProc("Proc_CreateAccountBranch", obj, "Write");
+            if (result != null)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = result;
+                return serviceResponse;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                return serviceResponse;
+            }
+        }
         /// <summary>
         /// Đăng nhập
         /// </summary>
