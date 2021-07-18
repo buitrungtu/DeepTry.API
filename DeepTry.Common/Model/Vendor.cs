@@ -44,7 +44,7 @@ namespace DeepTry.Common.Model
 
         public string description { get; set; }
 
-        public string branch_id { get; set; }
+        public Guid branch_id { get; set; }
 
         public DateTime? create_date { get; set; }
 

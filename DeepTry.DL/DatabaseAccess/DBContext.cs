@@ -125,7 +125,7 @@ namespace DeepTry.DL
                 SqlCommandBuilder.DeriveParameters(_sqlCommand);
                 if (_sqlCommand.Parameters.Count > 0)
                 {
-                    _sqlCommand.Parameters[0].Value = objId;
+                    _sqlCommand.Parameters[1].Value = objId;
                 }
                 SqlDataReader mySqlDataReader = _sqlCommand.ExecuteReader();
                 var obj = Activator.CreateInstance<T>();
@@ -143,7 +143,7 @@ namespace DeepTry.DL
                 mySqlDataReader.Close();
                 return obj;
             }
-            catch
+            catch(Exception e)
             {
                 return default(T);
             }
@@ -305,7 +305,7 @@ namespace DeepTry.DL
                 _sqlCommand.CommandText = $"{procName}";
                 SqlCommandBuilder.DeriveParameters(_sqlCommand); //Lấy ra các tham số cần truyền của proc
                 var parameters = _sqlCommand.Parameters;
-                JObject parameter = JObject.Parse(p_parameters.ToString());
+                JObject parameter = JObject.FromObject(p_parameters);
                 foreach (SqlParameter param in parameters)
                 {
                     var paramName = param.ParameterName.Replace("@", "");

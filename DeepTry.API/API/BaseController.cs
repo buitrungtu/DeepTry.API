@@ -37,7 +37,7 @@ namespace DeepTry.API.API
         }
 
         [HttpGet("get_by_id")]
-        public IActionResult GetById([FromRoute] Guid objID)
+        public IActionResult GetById(Guid objID)
         {
             //TODO: Sửa db phần lấy thông tin
             var obj = _baseService.GetById(objID);
